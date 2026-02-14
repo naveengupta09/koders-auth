@@ -191,8 +191,10 @@ export default function Dashboard() {
     optimisticUpdate(activeTask._id, { status: newStatus });
     try {
       await updateTask(activeTask._id, { status: newStatus });
+      await fetchStats();
     } catch (error) {
       optimisticUpdate(activeTask._id, { status: activeTask.status });
+      await fetchStats();
     }
   };
 

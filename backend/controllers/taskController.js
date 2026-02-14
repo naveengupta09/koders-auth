@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Task from '../models/Task.js';
 
 // @desc    Get all tasks
@@ -243,9 +244,10 @@ export const getTaskStats = async (req, res) => {
     const query = { isDeleted: false };
 
     if (req.user.role === 'user') {
+      const userId = new mongoose.Types.ObjectId(req.user.id);
       query.$or = [
-        { createdBy: req.user.id },
-        { assignedTo: req.user.id },
+        { createdBy: userId },
+        { assignedTo: userId },
       ];
     }
 
